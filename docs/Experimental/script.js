@@ -1,3 +1,23 @@
+class TranslationElement {
+    constructor(inEng, inKor) {
+        this.eng = inEng;
+        this.kor = inKor;
+    }
+}
+
+function CombineWithSpace(a, b) {
+    return a+ " " + b;
+};
+
+function CombineWithSpaceEng(a, b){
+    return CombineWithSpace(a.eng, b.eng)
+}
+
+function CombineWithSpaceKor(a, b){
+    return CombineWithSpace(a.kor, b.kor)
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const draggables = document.querySelectorAll('.draggable');
     const dropSlots = document.querySelectorAll('.drop-slot');
@@ -6,18 +26,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const result = document.getElementById('result');
     const questionText = document.querySelector('p strong');
 
+    let Ha_Dan = new TranslationElement("Low", "Ha Dan");
+    let Mahk_Ki = new TranslationElement("Block", "Mahk Ki");
+    let Sang_Dan = new TranslationElement("High", "Sang_Dan");
+
     // Initial question setup
     let currentQuestionIndex = 0;
     const questions = [
         {
-            question: "Low Block",
-            answer: "Ha Dan Mahk Ki",
-            draggables: ["Mahk Ki", "Choong Dan", "Ha Dan", "Cha Ki"],
+            question: CombineWithSpaceEng(Ha_Dan, Mahk_Ki),
+            answer: CombineWithSpaceKor(Ha_Dan, Mahk_Ki),
+            draggables: [Mahk_Ki.kor, "Choong Dan", Ha_Dan.kor, "Cha Ki"],
         },
         {
-            question: "High Block",
-            answer: "Sang Dan Mahk Ki",
-            draggables: ["Chung dan", "Kong Kyuck", "Sang Dan", "Mahk Ki"],
+            question: CombineWithSpaceEng(Sang_Dan, Mahk_Ki),
+            answer: CombineWithSpaceKor(Sang_Dan, Mahk_Ki),
+            draggables: ["Chung dan", "Kong Kyuck", Sang_Dan.kor, Mahk_Ki.kor],
         },
     ];
 
