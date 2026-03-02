@@ -17,5 +17,5 @@ for item in data:
     reordered.append(new_item)
 
 # Write it back out
-with open("bb_quiz_capture.json", "w") as f:
+with open("output/bb_quiz_capture.json", "w") as f:
     json.dump(reordered, f, indent=4)

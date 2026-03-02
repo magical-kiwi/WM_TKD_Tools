@@ -24,8 +24,8 @@ def join_words(words: list[str]) -> str:
 
 def check_and_clean() -> bool:
     global issue
-    with open("manual_text.txt") as f_in:
-        with open("converted.txt", "w") as f_out:
+    with open("content/manual_text.txt") as f_in:
+        with open("content/converted.txt", "w") as f_out:
             f_in_lines = f_in.readlines()
             print("pre check")
             for line in f_in_lines:
@@ -59,7 +59,7 @@ def check_and_clean() -> bool:
 
 
 def convert_file():
-    with open("converted.txt", "r") as f_in:
+    with open("content/converted.txt", "r") as f_in:
         f_in_lines = f_in.readlines()
         print("starting conversion")
         if not header_marker in f_in_lines[0]:
@@ -68,13 +68,13 @@ def convert_file():
         sections: list[TerminologySection] = []
         section: TerminologySection
         for line in f_in_lines:
+            line = line.strip()
             # is header?
             if header_marker in line:
                 if line.find(header_marker) != 0:
                     print("header marker was not first character")
                     return
                 header = line[1:]
-                header.strip()
                 words = header.split(" ")
                 header = " ".join((word.capitalize() for word in words))
                 section = TerminologySection(name=header.strip().capitalize(), translations={})
@@ -85,9 +85,10 @@ def convert_file():
             if len(translation) != 2:
                 print(f"too many {seperator} characters in line")
                 return
+
             section.translations[translation[0]] = translation[1]
 
-        with open("manual.json", "w") as f:
+        with open("output/manual.json", "w") as f:
             json.dump([asdict(section) for section in sections], f, indent=4)
         print("conversion finished")
 

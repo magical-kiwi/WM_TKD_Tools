@@ -357,7 +357,7 @@
         "correct": "c"
     },
     {
-        "question": "Ba Ro",
+        "question": "Baro",
         "a": "Salute",
         "b": "Return",
         "c": "Rest",
@@ -525,14 +525,14 @@
         "correct": "c"
     },
     {
-        "question": "Ahneso Phaku Ro Mahk Ki",
+        "question": "Ahneso Pahkuro Mahk Ki",
         "a": "Outside to Inside Block",
         "b": "Inside to Outside Block",
         "c": "Side Centre Block",
         "correct": "b"
     },
     {
-        "question": "Phakeso Ahnu Ro Mahk Ki",
+        "question": "Pahkeso Ahnuro Mahk Ki",
         "a": "Outside to Inside Block",
         "b": "Inside to Outside Block",
         "c": "Side Block",
@@ -672,14 +672,14 @@
         "correct": "b"
     },
     {
-        "question": "Ahneso Phaku Ro Cha Ki",
+        "question": "Ahneso Pahkuro Cha Ki",
         "a": "Crescent Kick Inside to Outside",
         "b": "Inside to Outside Block",
         "c": "Crescent Kick Outside to Inside",
         "correct": "a"
     },
     {
-        "question": "Phakeso Ahnu Ro Cha Ki",
+        "question": "Pahkeso Ahnuro Cha Ki",
         "a": "Crescent Kick Inside to Outside",
         "b": "Crescent Kick Outside to Inside",
         "c": "Outside to Inside Block",
@@ -742,7 +742,7 @@
         "correct": "b"
     },
     {
-        "question": "Ko Map Sum Ni Dah",
+        "question": "Ko Map Sum Ni Da",
         "a": "Thank You",
         "b": "Respect",
         "c": "Concentration",
@@ -819,7 +819,7 @@
         "correct": "a"
     },
     {
-        "question": "Soo or Sohn",
+        "question": "Soo / Sohn",
         "a": "Chop",
         "b": "Hand",
         "c": "Neck",
@@ -833,7 +833,7 @@
         "correct": "a"
     },
     {
-        "question": "Moo Roope",
+        "question": "Moo Roop",
         "a": "Elbow",
         "b": "Solar Plexus",
         "c": "Knee",
