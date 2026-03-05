@@ -93,7 +93,7 @@ Sang Dan Mahk Ki|High defense
 Ahneso Pahkuro Mahk Ki|Inside/outside block
 Pahkeso Ahnuro Mahk Ki|Outside/inside block
 Choong Dan Hang Jin|Side punch
-Ssang Soo Mahk Ki T|wo hand block
+Ssang Soo Mahk Ki|Two hand block
 Chun Kul Ssang Soo|Two hand block, front stance
 Ssang Soo Sang Dan Mahk Ki|High two hands X block
 Ssang Soo Ha Dan Mahk Ki|Low two hands X block
@@ -186,7 +186,7 @@ Chu Mok|Fist
 Mok|Neck
 Hur Ri|Waist
 Da Ri|Leg
-Soo / Sohn|Hand
+Soo or Sohn|Hand
 Pahl Koop|Elbow
 Moo Roop|Knee
 Noon|Eye
