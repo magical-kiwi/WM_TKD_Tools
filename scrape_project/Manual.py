@@ -47,3 +47,8 @@ class Manual:
             return Manual.TranslationResult(in_val=val, out_val=out_val, accuracy=accuracy)
 
         return Manual.find_best_match_in_list(val, list(values))
+
+    def get_translation(self, key) -> str:
+        if key in self.translations:
+            return self.translations[key]
+        return ""
