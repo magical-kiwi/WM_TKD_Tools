@@ -3,9 +3,9 @@ import json
 from dataclasses import dataclass
 from typing import Optional, Dict, List
 from urllib.parse import urljoin
-from difflib import SequenceMatcher
 import requests
 from bs4 import BeautifulSoup
+from common import text_normalise, similarity
 
 INTRO_URL = "https://www.cambstsd.co.uk/impingtontsd/bbtermquiz.php"
 QUIZ_URL = "https://www.cambstsd.co.uk/impingtontsd/bb_quiz.php"
@@ -20,9 +20,6 @@ MAX_STEPS = 500 #500  # plenty for ~300 questions
 def sleep_polite():
     time.sleep(REQUEST_DELAY_SECONDS)
 
-
-def text_normalise(s: str) -> str:
-    return " ".join(s.split()).strip()
 
 @dataclass
 class QuestionPage:
@@ -99,12 +96,6 @@ def choose_answer_to_advance(q: QuestionPage) -> str:
         if o["value"].lower() == "d" and "don't know" in o["text"].lower():
             return o["value"]
     return q.options[0]["value"]
-
-
-def similarity(a: str, b: str) -> float:
-    a_norm = text_normalise(a)
-    b_norm = text_normalise(b)
-    return SequenceMatcher(None, a_norm, b_norm).ratio()
 
 
 def find_correct_letter(options, correct_meaning):
@@ -195,16 +186,13 @@ def main():
         # After feedback, the server may already return the next question
         # OR may require another GET/POST. Often, the feedback page auto-redirects.
         # We handle both by: try parsing r2 as question; if not, fetch START_URL again.
-        #test_for_question_result = "Testing page by parsing as question: "
         qp2 = parse_question_page(r2.text)
         if qp2 is not None:
             r = r2
-            #test_for_question_result += "it was a question"
         else:
             r = session.get(QUIZ_URL, timeout=30)
             r.raise_for_status()
             sleep_polite()
-        #print (test_for_question_result)
 
     json_text = json.dumps(captured, ensure_ascii=False, indent=4)
     with open(OUTFILE, "w", encoding="utf-8") as f:
@@ -222,6 +210,4 @@ def test_cases():
         parse_feedback(html.read())
 
 
-if __name__ == "__main__":
-    main()
-    #test_cases()
+main()

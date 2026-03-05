@@ -1,8 +1,5 @@
-﻿import json
-from dataclasses import dataclass, asdict
-
-seperator = "|"
-header_marker = "*"
+﻿from dataclasses import dataclass, asdict
+from common import seperator, header_marker, write_line, write_json_file
 
 issue = False
 
@@ -11,11 +8,6 @@ issue = False
 class TerminologySection:
     name: str
     translations: dict[str, str]
-
-def write_line(file, line: str):
-    if line.find("\n") == -1:
-        line += "\n"
-    file.write(line)
 
 
 def join_words(words: list[str]) -> str:
@@ -62,7 +54,7 @@ def convert_file():
     with open("content/converted.txt", "r") as f_in:
         f_in_lines = f_in.readlines()
         print("starting conversion")
-        if not header_marker in f_in_lines[0]:
+        if header_marker not in f_in_lines[0]:
             print("first line wasn't a header")
             return
         sections: list[TerminologySection] = []
@@ -88,8 +80,7 @@ def convert_file():
 
             section.translations[translation[0]] = translation[1]
 
-        with open("output/manual.json", "w") as f:
-            json.dump([asdict(section) for section in sections], f, indent=4)
+        write_json_file("output/manual.json", [asdict(section) for section in sections], indent=4)
         print("conversion finished")
 
 

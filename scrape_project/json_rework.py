@@ -1,8 +1,9 @@
 ﻿import json
+from common import load_json_file, write_json_file
 
 # Load your existing JSON
-with open("bb_quiz_capture_bk.json", "r") as f:
-    data = json.load(f)
+
+data = load_json_file("bb_quiz_capture_bk.json", "r")
 
 # Reorder keys
 reordered = []
@@ -17,5 +18,4 @@ for item in data:
     reordered.append(new_item)
 
 # Write it back out
-with open("output/bb_quiz_capture.json", "w") as f:
-    json.dump(reordered, f, indent=4)
+write_json_file("output/bb_quiz_capture.json", reordered, indent=4)
