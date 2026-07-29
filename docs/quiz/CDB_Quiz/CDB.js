@@ -3,6 +3,7 @@ import { SequentialQuiz } from '../cbd_quiz.js';
 const quizData = [
     {
         "question": "Tang Soo Do",
+        "category": "titles_rank_tenets",
         "a": "The art we are studying",
         "b": "Our martial art",
         "c": "Korean karate",
@@ -10,6 +11,7 @@ const quizData = [
     },
     {
         "question": "Kwan Chang Nim",
+        "category": "titles_rank_tenets",
         "a": "Chief Instructor",
         "b": "Grandmaster",
         "c": "Examiner",
@@ -17,6 +19,7 @@ const quizData = [
     },
     {
         "question": "Sah Bum Nim",
+        "category": "titles_rank_tenets",
         "a": "Instructor",
         "b": "Leader",
         "c": "Teacher",
@@ -24,6 +27,7 @@ const quizData = [
     },
     {
         "question": "Dan",
+        "category": "titles_rank_tenets",
         "a": "Instructor",
         "b": "Highest Grade in Class",
         "c": "Black Belt",
@@ -31,6 +35,7 @@ const quizData = [
     },
     {
         "question": "Gup",
+        "category": "titles_rank_tenets",
         "a": "Colour Belt",
         "b": "Student",
         "c": "Lower Grade",
@@ -38,6 +43,7 @@ const quizData = [
     },
     {
         "question": "Dojang",
+        "category": "titles_rank_tenets",
         "a": "Club",
         "b": "Training Hall or Studio",
         "c": "Uniform",
@@ -45,6 +51,7 @@ const quizData = [
     },
     {
         "question": "Do Bohk",
+        "category": "titles_rank_tenets",
         "a": "Training Hall or Studio",
         "b": "Way of Life",
         "c": "Uniform",
@@ -52,6 +59,7 @@ const quizData = [
     },
     {
         "question": "Dee",
+        "category": "titles_rank_tenets",
         "a": "Belt",
         "b": "Back",
         "c": "Uniform",
@@ -59,6 +67,7 @@ const quizData = [
     },
     {
         "question": "Sun Bae",
+        "category": "titles_rank_tenets",
         "a": "Gup Member",
         "b": "Junior Member",
         "c": "Senior Member",
@@ -66,6 +75,7 @@ const quizData = [
     },
     {
         "question": "Sae Kye Tang Soo Do Hyup Hoi",
+        "category": "titles_rank_tenets",
         "a": "World Tang So Do Flag",
         "b": "World Tang Soo Do Assoc",
         "c": "Basic Form",
@@ -73,6 +83,7 @@ const quizData = [
     },
     {
         "question": "Shim Sa Kwan Nim",
+        "category": "titles_rank_tenets",
         "a": "Examiner",
         "b": "Testing",
         "c": "Instructor",
@@ -80,6 +91,7 @@ const quizData = [
     },
     {
         "question": "Shim Sa",
+        "category": "titles_rank_tenets",
         "a": "Empty Mind",
         "b": "Testing both Gup & Dan",
         "c": "Examiner",
@@ -87,6 +99,7 @@ const quizData = [
     },
     {
         "question": "Hu Bae",
+        "category": "titles_rank_tenets",
         "a": "Senior Member",
         "b": "Junior Member",
         "c": "Club Member",
@@ -94,6 +107,7 @@ const quizData = [
     },
     {
         "question": "Kukgi",
+        "category": "titles_rank_tenets",
         "a": "Salute the Flag",
         "b": "Association Flag",
         "c": "National Flag",
@@ -101,6 +115,7 @@ const quizData = [
     },
     {
         "question": "Hyup Hoi Ki",
+        "category": "titles_rank_tenets",
         "a": "Association Flag",
         "b": "Korean Flag",
         "c": "National Flag",
@@ -108,6 +123,7 @@ const quizData = [
     },
     {
         "question": "Choon Bee Woon Dong",
+        "category": "commands_etiquette",
         "a": "Ready Stance",
         "b": "Warm-up Exercise",
         "c": "Basic Exercise",
@@ -115,6 +131,7 @@ const quizData = [
     },
     {
         "question": "Ki Cho Woon Dong",
+        "category": "commands_etiquette",
         "a": "Basic Techniques Exercise",
         "b": "Kicking Exercises",
         "c": "Energy Exercises",
@@ -122,6 +139,7 @@ const quizData = [
     },
     {
         "question": "Hyung",
+        "category": "stances_fundamentals",
         "a": "Self Defence",
         "b": "Form or Pattern",
         "c": "Waist",
@@ -129,6 +147,7 @@ const quizData = [
     },
     {
         "question": "Il Soo Sik Dae Ryun",
+        "category": "stances_fundamentals",
         "a": "Self Defence",
         "b": "Free Sparring",
         "c": "One Step Sparring",
@@ -136,6 +155,7 @@ const quizData = [
     },
     {
         "question": "Ja Yu Dae Ryun",
+        "category": "stances_fundamentals",
         "a": "One Step Sparring",
         "b": "Free Sparring",
         "c": "Basic Techniques",
@@ -143,6 +163,7 @@ const quizData = [
     },
     {
         "question": "Ho Sin Sul",
+        "category": "stances_fundamentals",
         "a": "Self Defence",
         "b": "Hand Techniques",
         "c": "Breaking",
@@ -150,6 +171,7 @@ const quizData = [
     },
     {
         "question": "Kyuck Pa",
+        "category": "stances_fundamentals",
         "a": "Centre Punch",
         "b": "Breaking",
         "c": "Reverse Punch",
@@ -157,6 +179,7 @@ const quizData = [
     },
     {
         "question": "Ko Dan Ja",
+        "category": "titles_rank_tenets",
         "a": "Gup Holder",
         "b": "Senior Dan Holder",
         "c": "Dan Holder",
@@ -164,6 +187,7 @@ const quizData = [
     },
     {
         "question": "Yu Dan Ja",
+        "category": "titles_rank_tenets",
         "a": "Dan Holder",
         "b": "Senior Dan Holder",
         "c": "Beginner",
@@ -171,6 +195,7 @@ const quizData = [
     },
     {
         "question": "Yu Gup Ja",
+        "category": "titles_rank_tenets",
         "a": "Beginner",
         "b": "Dan Holder",
         "c": "Gup Holder",
@@ -178,6 +203,7 @@ const quizData = [
     },
     {
         "question": "Cho Bo Ja",
+        "category": "titles_rank_tenets",
         "a": "Dan Holder",
         "b": "Beginner",
         "c": "Gup Holder",
@@ -185,6 +211,7 @@ const quizData = [
     },
     {
         "question": "Nae Kong",
+        "category": "commands_etiquette",
         "a": "Internal Power Exercise",
         "b": "External Power Exercise",
         "c": "Spiritual Power Exercise",
@@ -192,6 +219,7 @@ const quizData = [
     },
     {
         "question": "Weh Kong",
+        "category": "commands_etiquette",
         "a": "Spiritual Power Exercise",
         "b": "External Power Exercise",
         "c": "Internal Power Exercise",
@@ -199,6 +227,7 @@ const quizData = [
     },
     {
         "question": "Shim Kong",
+        "category": "commands_etiquette",
         "a": "Spiritual Power Exercise",
         "b": "External Power Exercise",
         "c": "Internal Power Exercise",
@@ -206,6 +235,7 @@ const quizData = [
     },
     {
         "question": "Mahk Ki",
+        "category": "blocks_strikes",
         "a": "Meditation",
         "b": "Kick",
         "c": "Block",
@@ -213,6 +243,7 @@ const quizData = [
     },
     {
         "question": "Kong Kyuck",
+        "category": "blocks_strikes",
         "a": "Attack",
         "b": "Punch",
         "c": "Strike",
@@ -220,6 +251,7 @@ const quizData = [
     },
     {
         "question": "Ki Hap",
+        "category": "titles_rank_tenets",
         "a": "Kick",
         "b": "Yell (Focus one's Mind and Energy)",
         "c": "Energy",
@@ -227,6 +259,7 @@ const quizData = [
     },
     {
         "question": "Shi Sun",
+        "category": "commands_etiquette",
         "a": "Focus of Eyes",
         "b": "Look over shoulder",
         "c": "Turn",
@@ -234,6 +267,7 @@ const quizData = [
     },
     {
         "question": "Chung Shim",
+        "category": "commands_etiquette",
         "a": "Empty Mind",
         "b": "Balance",
         "c": "Centre Punch",
@@ -241,6 +275,7 @@ const quizData = [
     },
     {
         "question": "Jung Kwon",
+        "category": "blocks_strikes",
         "a": "Heel of Palm",
         "b": "Back Fist",
         "c": "Fore Fist",
@@ -248,6 +283,7 @@ const quizData = [
     },
     {
         "question": "Kap Kwon",
+        "category": "blocks_strikes",
         "a": "Heel of Palm",
         "b": "Fore Fist",
         "c": "Back Fist",
@@ -255,6 +291,7 @@ const quizData = [
     },
     {
         "question": "Jang Kwon",
+        "category": "blocks_strikes",
         "a": "Heel of Palm",
         "b": "Fore Fist",
         "c": "Back Fist",
@@ -262,6 +299,7 @@ const quizData = [
     },
     {
         "question": "Soo Do",
+        "category": "blocks_strikes",
         "a": "Open Hand",
         "b": "Knife Hand",
         "c": "Ridge Hand",
@@ -269,6 +307,7 @@ const quizData = [
     },
     {
         "question": "Yuk Soo Do",
+        "category": "blocks_strikes",
         "a": "Knife Hand",
         "b": "Ridge Hand",
         "c": "Spear Hand",
@@ -276,6 +315,7 @@ const quizData = [
     },
     {
         "question": "Kwan Soo",
+        "category": "blocks_strikes",
         "a": "Spear Hand",
         "b": "Ridge Hand",
         "c": "Knife Hand",
@@ -283,6 +323,7 @@ const quizData = [
     },
     {
         "question": "Soo Ki",
+        "category": "blocks_strikes",
         "a": "Foot techniques",
         "b": "Kick",
         "c": "Hand Techniques",
@@ -290,6 +331,7 @@ const quizData = [
     },
     {
         "question": "Jok Ki",
+        "category": "kicks",
         "a": "Hand Techniques",
         "b": "Kick Techniques",
         "c": "Kick",
@@ -297,6 +339,7 @@ const quizData = [
     },
     {
         "question": "Cha Ki",
+        "category": "kicks",
         "a": "Kick",
         "b": "Hand Techniques",
         "c": "Kick Techniques",
@@ -304,6 +347,7 @@ const quizData = [
     },
     {
         "question": "Ha Dan",
+        "category": "stances_fundamentals",
         "a": "High",
         "b": "Low",
         "c": "Centre",
@@ -311,6 +355,7 @@ const quizData = [
     },
     {
         "question": "Choong Dan",
+        "category": "stances_fundamentals",
         "a": "Centre",
         "b": "Low",
         "c": "High",
@@ -318,6 +363,7 @@ const quizData = [
     },
     {
         "question": "Sang Dan",
+        "category": "stances_fundamentals",
         "a": "Low",
         "b": "Centre",
         "c": "High",
@@ -325,6 +371,7 @@ const quizData = [
     },
     {
         "question": "Ahp",
+        "category": "stances_fundamentals",
         "a": "Back",
         "b": "Side",
         "c": "Front",
@@ -332,6 +379,7 @@ const quizData = [
     },
     {
         "question": "Yup",
+        "category": "stances_fundamentals",
         "a": "Front",
         "b": "Side",
         "c": "Back",
@@ -339,6 +387,7 @@ const quizData = [
     },
     {
         "question": "Dwi",
+        "category": "stances_fundamentals",
         "a": "Back",
         "b": "Side",
         "c": "Front",
@@ -346,6 +395,7 @@ const quizData = [
     },
     {
         "question": "Cha Ryut",
+        "category": "commands_etiquette",
         "a": "Salute the Flag",
         "b": "Attention",
         "c": "Kick",
@@ -353,6 +403,7 @@ const quizData = [
     },
     {
         "question": "Kukgi Bae Rye",
+        "category": "commands_etiquette",
         "a": "Attention",
         "b": "Return",
         "c": "Salute the Flag",
@@ -360,6 +411,7 @@ const quizData = [
     },
     {
         "question": "Ba Ro",
+        "category": "commands_etiquette",
         "a": "Salute",
         "b": "Return",
         "c": "Rest",
@@ -367,6 +419,7 @@ const quizData = [
     },
     {
         "question": "Ahn Jo",
+        "category": "commands_etiquette",
         "a": "Sit Down",
         "b": "Meditation",
         "c": "Front Kick",
@@ -374,6 +427,7 @@ const quizData = [
     },
     {
         "question": "Muk Yum",
+        "category": "commands_etiquette",
         "a": "Neck",
         "b": "Meditation",
         "c": "Block",
@@ -381,6 +435,7 @@ const quizData = [
     },
     {
         "question": "Kwan Chang Nim E Kyung Yet",
+        "category": "commands_etiquette",
         "a": "Bow to Grandmaster",
         "b": "Salute the Flag",
         "c": "Bow to Instructor",
@@ -388,6 +443,7 @@ const quizData = [
     },
     {
         "question": "Sah Bum Nim E Kyung Yet",
+        "category": "commands_etiquette",
         "a": "Bow to Instructor",
         "b": "Salute the Flag",
         "c": "Bow to Grandmaster",
@@ -395,6 +451,7 @@ const quizData = [
     },
     {
         "question": "Choon Bee",
+        "category": "commands_etiquette",
         "a": "Sit Down",
         "b": "Centre",
         "c": "Ready",
@@ -402,6 +459,7 @@ const quizData = [
     },
     {
         "question": "Bahl Cha Ki Choon Bee",
+        "category": "commands_etiquette",
         "a": "Front Stretch Kick",
         "b": "Ready For Kick",
         "c": "Ready Stance",
@@ -409,6 +467,7 @@ const quizData = [
     },
     {
         "question": "Shio",
+        "category": "commands_etiquette",
         "a": "Rest",
         "b": "Begin",
         "c": "Ready",
@@ -416,6 +475,7 @@ const quizData = [
     },
     {
         "question": "Shi Jak",
+        "category": "commands_etiquette",
         "a": "Relax",
         "b": "Begin",
         "c": "Rest",
@@ -423,6 +483,7 @@ const quizData = [
     },
     {
         "question": "Tora",
+        "category": "commands_etiquette",
         "a": "Begin",
         "b": "Change Direction",
         "c": "Turn",
@@ -430,6 +491,7 @@ const quizData = [
     },
     {
         "question": "Dwi Ro Tora",
+        "category": "commands_etiquette",
         "a": "Back Chop",
         "b": "Back Kick",
         "c": "Turn to Rear",
@@ -437,6 +499,7 @@ const quizData = [
     },
     {
         "question": "Ku Ryung",
+        "category": "commands_etiquette",
         "a": "Command",
         "b": "By the Count",
         "c": "Form or Pattern",
@@ -444,6 +507,7 @@ const quizData = [
     },
     {
         "question": "Ku Ryung E Mat Cho So",
+        "category": "commands_etiquette",
         "a": "Command",
         "b": "By the Count",
         "c": "Without Count",
@@ -451,6 +515,7 @@ const quizData = [
     },
     {
         "question": "Ku Ryung Up Shi",
+        "category": "commands_etiquette",
         "a": "Without Count",
         "b": "By the Count",
         "c": "Command",
@@ -458,6 +523,7 @@ const quizData = [
     },
     {
         "question": "Choon Bee Ja Seh",
+        "category": "stances_fundamentals",
         "a": "Ready",
         "b": "Ready Stance",
         "c": "Stand still",
@@ -465,6 +531,7 @@ const quizData = [
     },
     {
         "question": "Chun Kul Ja Seh",
+        "category": "stances_fundamentals",
         "a": "Side Stance",
         "b": "Fighting Stance",
         "c": "Front Stance",
@@ -472,6 +539,7 @@ const quizData = [
     },
     {
         "question": "Hu Kul Ja Seh",
+        "category": "stances_fundamentals",
         "a": "Front Stance",
         "b": "Fighting Stance",
         "c": "Side Stance",
@@ -479,6 +547,7 @@ const quizData = [
     },
     {
         "question": "Kee Ma Ja Seh",
+        "category": "stances_fundamentals",
         "a": "Horse Riding Stance",
         "b": "Fighting Stance",
         "c": "Side Stance",
@@ -486,6 +555,7 @@ const quizData = [
     },
     {
         "question": "Sa Ko Rip Ja Seh",
+        "category": "stances_fundamentals",
         "a": "Horse Riding Stance",
         "b": "Side Stance",
         "c": "Front Stance",
@@ -493,6 +563,7 @@ const quizData = [
     },
     {
         "question": "Pahl Put Ki",
+        "category": "commands_etiquette",
         "a": "Elbow",
         "b": "Front Stretch Kick",
         "c": "Punching Exercise",
@@ -500,6 +571,7 @@ const quizData = [
     },
     {
         "question": "Ha Dan Mahk Ki",
+        "category": "blocks_strikes",
         "a": "Low Block",
         "b": "Centre Block",
         "c": "High Block",
@@ -507,6 +579,7 @@ const quizData = [
     },
     {
         "question": "Choong Dan Kong Kyuck",
+        "category": "blocks_strikes",
         "a": "Centre Block",
         "b": "High Punch",
         "c": "Centre Punch",
@@ -514,6 +587,7 @@ const quizData = [
     },
     {
         "question": "Sang Dan Kong Kyuck",
+        "category": "blocks_strikes",
         "a": "Centre Punch",
         "b": "High Punch",
         "c": "High Block",
@@ -521,6 +595,7 @@ const quizData = [
     },
     {
         "question": "Sang Dan Mahk Ki",
+        "category": "blocks_strikes",
         "a": "High Punch",
         "b": "Low Block",
         "c": "High Block",
@@ -528,6 +603,7 @@ const quizData = [
     },
     {
         "question": "Ahneso Phaku Ro Mahk Ki",
+        "category": "blocks_strikes",
         "a": "Outside to Inside Block",
         "b": "Inside to Outside Block",
         "c": "Side Centre Block",
@@ -535,6 +611,7 @@ const quizData = [
     },
     {
         "question": "Phakeso Ahnu Ro Mahk Ki",
+        "category": "blocks_strikes",
         "a": "Outside to Inside Block",
         "b": "Inside to Outside Block",
         "c": "Side Block",
@@ -542,6 +619,7 @@ const quizData = [
     },
     {
         "question": "Choong Dan Hang Jin",
+        "category": "blocks_strikes",
         "a": "Side Punch",
         "b": "Centre Punch",
         "c": "Centre Block",
@@ -549,6 +627,7 @@ const quizData = [
     },
     {
         "question": "Chun Kul Ssang Soo",
+        "category": "blocks_strikes",
         "a": "Two Hand Block, Fighting Stance",
         "b": "Front Stance",
         "c": "Two Hand Block, Front Stance",
@@ -556,6 +635,7 @@ const quizData = [
     },
     {
         "question": "Hu Kul Ssang Soo",
+        "category": "blocks_strikes",
         "a": "Fighting Stance",
         "b": "Two Hand Block, Fighting Stance",
         "c": "Two Hand Block, Front Stance",
@@ -563,6 +643,7 @@ const quizData = [
     },
     {
         "question": "Hu Kul Sang Dan Mahk Ki",
+        "category": "blocks_strikes",
         "a": "High Block, Fighting Stance",
         "b": "High Punch, Fighting Stance",
         "c": "High Block, Front Stance",
@@ -570,6 +651,7 @@ const quizData = [
     },
     {
         "question": "Ssang Soo Sang Dan Mahk Ki",
+        "category": "blocks_strikes",
         "a": "High Knife Hand Block",
         "b": "High Two Hands X Block",
         "c": "Low Two Hands X Block",
@@ -577,6 +659,7 @@ const quizData = [
     },
     {
         "question": "Ssang Soo Ha Dan Mahk Ki",
+        "category": "blocks_strikes",
         "a": "High Two Hands X Block",
         "b": "Low Knife Hand Block",
         "c": "Low Two Hands X Block",
@@ -584,6 +667,7 @@ const quizData = [
     },
     {
         "question": "Choong Dan Yup Mahk Ki",
+        "category": "blocks_strikes",
         "a": "Side Center Punch",
         "b": "Centre Block",
         "c": "Side Defence",
@@ -591,6 +675,7 @@ const quizData = [
     },
     {
         "question": "Sang Dan Soo Do Mahk Ki",
+        "category": "blocks_strikes",
         "a": "High Knife Hand Block",
         "b": "Low Knife Hand Block",
         "c": "High Two Hands X Block",
@@ -598,6 +683,7 @@ const quizData = [
     },
     {
         "question": "Ha Dan Soo Do Mahk Ki",
+        "category": "blocks_strikes",
         "a": "Low Two Hands X Block",
         "b": "Low Knife Hand Block",
         "c": "High Knife Hand Block",
@@ -605,6 +691,7 @@ const quizData = [
     },
     {
         "question": "Kwan Soo Kong Kyuck",
+        "category": "blocks_strikes",
         "a": "Groin Strike",
         "b": "Spear Hand Punch",
         "c": "Knife Hand Strike",
@@ -612,6 +699,7 @@ const quizData = [
     },
     {
         "question": "Yuk Jin",
+        "category": "blocks_strikes",
         "a": "Knife Hand Defence and Reverse Punch Fighting Stance",
         "b": "Knife Hand Defence and Reverse Punch Front Stance",
         "c": "Ridge Hand",
@@ -619,6 +707,7 @@ const quizData = [
     },
     {
         "question": "Yuk Soo",
+        "category": "blocks_strikes",
         "a": "Knife Hand Defence and Reverse Punch Fighting Stance",
         "b": "Ridge Hand",
         "c": "Knife Hand Defence and Reverse Punch Front Stance",
@@ -626,6 +715,7 @@ const quizData = [
     },
     {
         "question": "Bahl Poto Oly Ki",
+        "category": "kicks",
         "a": "Reverse Punch",
         "b": "Front Stretch Kick",
         "c": "Side Stretch Kick",
@@ -633,6 +723,7 @@ const quizData = [
     },
     {
         "question": "Ahp Cha Ki",
+        "category": "kicks",
         "a": "Front Kick",
         "b": "Side Kick",
         "c": "Roundhouse Kick",
@@ -640,6 +731,7 @@ const quizData = [
     },
     {
         "question": "Yup Cha Ki",
+        "category": "kicks",
         "a": "Front Kick",
         "b": "Side Kick",
         "c": "Roundhouse Kick",
@@ -647,6 +739,7 @@ const quizData = [
     },
     {
         "question": "Yup Poto Oly Ki",
+        "category": "kicks",
         "a": "Side Stretch Kick",
         "b": "Hook Kick",
         "c": "Front Stretch Kick",
@@ -654,6 +747,7 @@ const quizData = [
     },
     {
         "question": "Tollyo Cha Ki",
+        "category": "kicks",
         "a": "Side Kick",
         "b": "Front Kick",
         "c": "Roundhouse Kick",
@@ -661,6 +755,7 @@ const quizData = [
     },
     {
         "question": "Dwi Tollyo Cha Ki",
+        "category": "kicks",
         "a": "Spinning Back Kick",
         "b": "Roundhouse Kick",
         "c": "Straight Back Kick",
@@ -668,6 +763,7 @@ const quizData = [
     },
     {
         "question": "Dwi Cha Ki",
+        "category": "kicks",
         "a": "Spinning Back Kick",
         "b": "Straight Back Kick",
         "c": "Jump Back Kick",
@@ -675,6 +771,7 @@ const quizData = [
     },
     {
         "question": "Ahneso Phaku Ro Cha Ki",
+        "category": "kicks",
         "a": "Crescent Kick Inside to Outside",
         "b": "Inside to Outside Block",
         "c": "Crescent Kick Outside to Inside",
@@ -682,6 +779,7 @@ const quizData = [
     },
     {
         "question": "Phakeso Ahnu Ro Cha Ki",
+        "category": "kicks",
         "a": "Crescent Kick Inside to Outside",
         "b": "Crescent Kick Outside to Inside",
         "c": "Outside to Inside Block",
@@ -689,6 +787,7 @@ const quizData = [
     },
     {
         "question": "Dwi Hu Ryo Cha Ki",
+        "category": "kicks",
         "a": "Hook Kick",
         "b": "Axe Kick",
         "c": "Wheel Kick",
@@ -696,6 +795,7 @@ const quizData = [
     },
     {
         "question": "Yup Hu Ryo Cha Ki",
+        "category": "kicks",
         "a": "Diagonal Kick",
         "b": "Wheel Kick",
         "c": "Hook Kick",
@@ -703,6 +803,7 @@ const quizData = [
     },
     {
         "question": "Cchik Ki",
+        "category": "kicks",
         "a": "Axe Kick",
         "b": "Crescent Kick",
         "c": "Hook Kick",
@@ -710,6 +811,7 @@ const quizData = [
     },
     {
         "question": "Bit Cha Ki",
+        "category": "kicks",
         "a": "Hook Kick",
         "b": "Diagonal Kick",
         "c": "Axe Kick",
@@ -717,6 +819,7 @@ const quizData = [
     },
     {
         "question": "E Dan Ahp Cha Ki",
+        "category": "kicks",
         "a": "Side Jump Kick",
         "b": "Front Jump Kick",
         "c": "Jumping Round Kick",
@@ -724,6 +827,7 @@ const quizData = [
     },
     {
         "question": "E Dan Yup Cha Ki",
+        "category": "kicks",
         "a": "Side Jump Kick",
         "b": "Front Jump Kick",
         "c": "Jumping Round Kick",
@@ -731,6 +835,7 @@ const quizData = [
     },
     {
         "question": "E Dan Tollyo Cha Ki",
+        "category": "kicks",
         "a": "Side Jump Kick",
         "b": "Front Jump Kick",
         "c": "Jumping Round Kick",
@@ -738,6 +843,7 @@ const quizData = [
     },
     {
         "question": "E Dan Dwi Tollyo Cha Ki",
+        "category": "kicks",
         "a": "Jump Back Kick",
         "b": "Jump Spinning Back Kick",
         "c": "Jumping Round Kick",
@@ -745,6 +851,7 @@ const quizData = [
     },
     {
         "question": "Ko Map Sum Ni Dah",
+        "category": "titles_rank_tenets",
         "a": "Thank You",
         "b": "Respect",
         "c": "Concentration",
@@ -752,6 +859,7 @@ const quizData = [
     },
     {
         "question": "Chung Shin Tong Il",
+        "category": "titles_rank_tenets",
         "a": "Humility",
         "b": "Concentration",
         "c": "Endurance",
@@ -759,6 +867,7 @@ const quizData = [
     },
     {
         "question": "In Neh",
+        "category": "titles_rank_tenets",
         "a": "Endurance",
         "b": "Respect",
         "c": "Humility",
@@ -766,6 +875,7 @@ const quizData = [
     },
     {
         "question": "Kyum Son",
+        "category": "titles_rank_tenets",
         "a": "Concentration",
         "b": "Thank You",
         "c": "Humility",
@@ -773,6 +883,7 @@ const quizData = [
     },
     {
         "question": "Chon Kyung",
+        "category": "titles_rank_tenets",
         "a": "Respect",
         "b": "Humility",
         "c": "Concentration",
@@ -780,6 +891,7 @@ const quizData = [
     },
     {
         "question": "Pahl",
+        "category": "anatomy",
         "a": "Elbow",
         "b": "Arm",
         "c": "Foot",
@@ -787,6 +899,7 @@ const quizData = [
     },
     {
         "question": "Bahl",
+        "category": "anatomy",
         "a": "Arm",
         "b": "Foot",
         "c": "Leg",
@@ -794,6 +907,7 @@ const quizData = [
     },
     {
         "question": "Chu Mok",
+        "category": "anatomy",
         "a": "Fist",
         "b": "Chin",
         "c": "Neck",
@@ -801,6 +915,7 @@ const quizData = [
     },
     {
         "question": "Mok",
+        "category": "anatomy",
         "a": "Wrist",
         "b": "Forehead",
         "c": "Neck",
@@ -808,6 +923,7 @@ const quizData = [
     },
     {
         "question": "Hur Ri",
+        "category": "anatomy",
         "a": "Groin",
         "b": "Waist",
         "c": "Leg",
@@ -815,6 +931,7 @@ const quizData = [
     },
     {
         "question": "Da Ri",
+        "category": "anatomy",
         "a": "Leg",
         "b": "Philtrum",
         "c": "Forehead",
@@ -822,6 +939,7 @@ const quizData = [
     },
     {
         "question": "Soo or Sohn",
+        "category": "anatomy",
         "a": "Chop",
         "b": "Hand",
         "c": "Neck",
@@ -829,6 +947,7 @@ const quizData = [
     },
     {
         "question": "Pahl Koop",
+        "category": "anatomy",
         "a": "Elbow",
         "b": "Arm",
         "c": "Knee",
@@ -836,6 +955,7 @@ const quizData = [
     },
     {
         "question": "Moo Roope",
+        "category": "anatomy",
         "a": "Elbow",
         "b": "Solar Plexus",
         "c": "Knee",
@@ -843,6 +963,7 @@ const quizData = [
     },
     {
         "question": "I Ma",
+        "category": "anatomy",
         "a": "Forehead",
         "b": "Low Abdomen",
         "c": "Philtrum",
@@ -850,6 +971,7 @@ const quizData = [
     },
     {
         "question": "Tuck",
+        "category": "anatomy",
         "a": "Groin",
         "b": "Chin",
         "c": "Wrist",
@@ -857,6 +979,7 @@ const quizData = [
     },
     {
         "question": "Myung Chi",
+        "category": "anatomy",
         "a": "Low Abdomen",
         "b": "Solar Plexus",
         "c": "Philtrum",
@@ -864,6 +987,7 @@ const quizData = [
     },
     {
         "question": "In Choong",
+        "category": "anatomy",
         "a": "Philtrum",
         "b": "Groin",
         "c": "Low Abdomen",
@@ -871,6 +995,7 @@ const quizData = [
     },
     {
         "question": "Dan Jun",
+        "category": "anatomy",
         "a": "Chin",
         "b": "Solar Plexus",
         "c": "Low Abdomen",
@@ -878,6 +1003,7 @@ const quizData = [
     },
     {
         "question": "Ko Hwan",
+        "category": "anatomy",
         "a": "Philtrum",
         "b": "Groin",
         "c": "Forehead",
