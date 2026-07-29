@@ -1,4 +1,4 @@
-import { Quiz } from '../quiz_common.js';
+import { SequentialQuiz } from '../cbd_quiz.js';
 
 const quizData = [
     {
@@ -885,4 +885,4 @@ const quizData = [
     }
 ];
 
-let quiz = new Quiz(document,'Cho Dan Bo Terminology Quiz', quizData);
+let quiz = new SequentialQuiz(document,'Cho Dan Bo Terminology Quiz', quizData);
