@@ -5,4 +5,4 @@ const params = new URLSearchParams(window.location.search);
 const disable_cdb_test = params.get("cdb_test") == null;
 
 WB_QuizButton.disabled = true;
-CDB_QuizButton.disabled = disable_cdb_test;
+//CDB_QuizButton.disabled = disable_cdb_test;
