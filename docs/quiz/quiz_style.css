@@ -124,3 +124,59 @@ label {
 .answer-option.dont-know:hover {
     background-color: #545b62;
 }
+
+.quiz-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.quiz-controls button {
+    flex: 1;
+    min-width: fit-content;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.category-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.category-option:hover {
+    background-color: #0056b3;
+}
+
+.category-option.full-quiz-option {
+    background-color: #28a745;
+}
+
+.category-option.full-quiz-option:hover {
+    background-color: #1e7e34;
+}
+
+.category-name {
+    font-size: 1.15em;
+    font-weight: bold;
+}
+
+.category-meta {
+    font-size: 0.9em;
+    opacity: 0.9;
+}

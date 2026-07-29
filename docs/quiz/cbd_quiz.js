@@ -2,13 +2,16 @@
 // to comfortably review as a single scrolling page (e.g. the 126-question
 // black belt quiz).
 export class SequentialQuiz {
-    constructor(document, title, questions = []) {
+    constructor(document, title, questions = [], options = {}) {
         this.quizData = questions;
         this.title = title;
+        this.onComplete = options.onComplete || null;
         this.quizElements = this.#getQuizElements(document);
-        this.quizElements.backButton.addEventListener('click', () => {
-            this.goBack()
-        });
+        if (options.manageBackButton !== false) {
+            this.quizElements.backButton.addEventListener('click', () => {
+                this.goBack()
+            });
+        }
         this.quizElements.resetButton.addEventListener('click', () => {
             this.resetQuiz()
         });
@@ -138,6 +141,10 @@ export class SequentialQuiz {
         }
 
         quizElements.results.innerHTML = resultsHtml;
+
+        if (this.onComplete) {
+            this.onComplete(this.score, this.quizData.length);
+        }
     }
 
     #calculateEncouragment(score){
@@ -150,5 +157,131 @@ export class SequentialQuiz {
         else encouragement = 'Keep practising, you get there in no time!';
 
         return encouragement
+    }
+}
+
+// Presents a menu of themed sub-sections (plus a "Full Quiz" option) for a
+// large quiz, and runs a SequentialQuiz for whichever the user picks. High
+// scores per section are kept in localStorage so they persist between visits.
+export class CategoryQuizMenu {
+    constructor(document, title, quizData, categories, storageKey) {
+        this.document = document;
+        this.title = title;
+        this.quizData = quizData;
+        this.categories = categories;
+        this.storageKey = storageKey;
+        this.elements = this.#getElements(document);
+        this.elements.title.innerHTML = title;
+        this.elements.backButton.addEventListener('click', () => {
+            window.location.href = "../../index.html";
+        });
+        this.elements.changeCategoryButton.addEventListener('click', () => {
+            this.#showMenu()
+        });
+        this.#showMenu();
+    }
+
+    #getElements(doc) {
+        return {
+            title: doc.getElementById("title"),
+            categorySelect: doc.getElementById("category-select"),
+            progress: doc.getElementById("progress"),
+            feedback: doc.getElementById("feedback"),
+            quiz: doc.getElementById("quiz"),
+            results: doc.getElementById("results"),
+            resetButton: doc.getElementById("reset"),
+            changeCategoryButton: doc.getElementById("change-category"),
+            backButton: doc.getElementById("back"),
+        };
+    }
+
+    #highScoreKey(slug) {
+        return `${this.storageKey}_highscore_${slug}`;
+    }
+
+    #getHighScore(slug) {
+        try {
+            const raw = localStorage.getItem(this.#highScoreKey(slug));
+            return raw ? JSON.parse(raw) : null;
+        } catch {
+            return null;
+        }
+    }
+
+    #saveHighScore(slug, score, total) {
+        const existing = this.#getHighScore(slug);
+        if (!existing || score > existing.score) {
+            localStorage.setItem(this.#highScoreKey(slug), JSON.stringify({ score, total }));
+        }
+    }
+
+    #questionsForCategory(slug) {
+        return slug === 'full' ? this.quizData : this.quizData.filter((q) => q.category === slug);
+    }
+
+    #showMenu() {
+        const elements = this.elements;
+
+        elements.progress.innerHTML = '';
+        elements.feedback.innerHTML = '';
+        elements.quiz.innerHTML = '';
+        elements.quiz.style.display = 'none';
+        elements.results.innerHTML = '';
+        elements.resetButton.style.display = 'none';
+        elements.changeCategoryButton.style.display = 'none';
+
+        elements.categorySelect.style.display = '';
+        elements.categorySelect.innerHTML = '';
+
+        const intro = document.createElement("p");
+        intro.innerHTML = "Choose a section to practise, or take the whole quiz in one go.";
+        elements.categorySelect.appendChild(intro);
+
+        const list = document.createElement("div");
+        list.className = "category-list";
+
+        [...Object.keys(this.categories), 'full'].forEach((slug) => {
+            const isFull = slug === 'full';
+            const label = isFull ? 'Full Quiz' : this.categories[slug];
+            const count = this.#questionsForCategory(slug).length;
+            const highScore = this.#getHighScore(slug);
+
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = isFull ? "category-option full-quiz-option" : "category-option";
+
+            let metaText = `${count} question${count === 1 ? '' : 's'}`;
+            if (highScore) {
+                metaText += ` · High score: ${highScore.score}/${highScore.total}`;
+            }
+
+            button.innerHTML = `<span class="category-name">${label}</span><span class="category-meta">${metaText}</span>`;
+            button.addEventListener('click', () => this.#startQuiz(slug, label));
+            list.appendChild(button);
+        });
+
+        elements.categorySelect.appendChild(list);
+    }
+
+    #startQuiz(slug, label) {
+        const elements = this.elements;
+
+        elements.categorySelect.style.display = 'none';
+        elements.quiz.style.display = '';
+        elements.resetButton.style.display = '';
+        elements.changeCategoryButton.style.display = '';
+
+        // Strip listeners left over from any previously started SequentialQuiz.
+        const freshReset = elements.resetButton.cloneNode(true);
+        elements.resetButton.replaceWith(freshReset);
+        elements.resetButton = freshReset;
+
+        const questions = this.#questionsForCategory(slug);
+        const quizTitle = slug === 'full' ? this.title : `${this.title}: ${label}`;
+
+        new SequentialQuiz(this.document, quizTitle, questions, {
+            manageBackButton: false,
+            onComplete: (score, total) => this.#saveHighScore(slug, score, total),
+        });
     }
 }

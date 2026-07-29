@@ -1,4 +1,4 @@
-import { SequentialQuiz } from '../cbd_quiz.js';
+import { CategoryQuizMenu } from '../cbd_quiz.js';
 
 const quizData = [
     {
@@ -1011,4 +1011,13 @@ const quizData = [
     }
 ];
 
-let quiz = new SequentialQuiz(document,'Cho Dan Bo Terminology Quiz', quizData);
+const categories = {
+    titles_rank_tenets: "Titles, Rank & Tenets",
+    commands_etiquette: "Commands & Class Etiquette",
+    stances_fundamentals: "Stances & Fundamentals",
+    blocks_strikes: "Blocks & Strikes",
+    kicks: "Kicks",
+    anatomy: "Anatomy & Vital Points"
+};
+
+let quiz = new CategoryQuizMenu(document, 'Cho Dan Bo Terminology Quiz', quizData, categories, 'cdbQuiz');
