@@ -160,6 +160,11 @@ export class SequentialQuiz {
     }
 }
 
+// Bump this when the shape of the stored high score value changes. Old,
+// differently-versioned entries are simply left orphaned in localStorage
+// rather than being misread as the new shape.
+const HIGH_SCORE_SCHEMA_VERSION = 1;
+
 // Presents a menu of themed sub-sections (plus a "Full Quiz" option) for a
 // large quiz, and runs a SequentialQuiz for whichever the user picks. High
 // scores per section are kept in localStorage so they persist between visits.
@@ -196,7 +201,7 @@ export class CategoryQuizMenu {
     }
 
     #highScoreKey(slug) {
-        return `${this.storageKey}_highscore_${slug}`;
+        return `${this.storageKey}_v${HIGH_SCORE_SCHEMA_VERSION}_highscore_${slug}`;
     }
 
     #getHighScore(slug) {
