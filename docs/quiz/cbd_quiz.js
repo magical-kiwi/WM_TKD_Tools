@@ -207,7 +207,12 @@ export class CategoryQuizMenu {
     #getHighScore(slug) {
         try {
             const raw = localStorage.getItem(this.#highScoreKey(slug));
-            return raw ? JSON.parse(raw) : null;
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (typeof parsed.score !== 'number' || typeof parsed.total !== 'number') {
+                return null;
+            }
+            return parsed;
         } catch {
             return null;
         }
