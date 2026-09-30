@@ -1,4 +1,4 @@
-import { Quiz } from '../quiz_common.js';
+import { GupQuiz } from '../gup_quiz.js';
 
 const quizData = [
     { question: "Tang Soo Do",                  a:"The art we study",     b:"Grandmaster",                   c:"Association flag",        correct:"a"}, // 1
@@ -13,4 +13,4 @@ const quizData = [
     { question: "Il Soo Sik Dae Ryun",          a:"1 step sparring",      b:"Form/Pattern",                  c:"Integrity",               correct:"a"}, // 10
 ];
 
-let quiz = new Quiz(document,'Green Belt Terminology Quiz', quizData);
+let quiz = new GupQuiz(document,'Green Belt Terminology Quiz', quizData);

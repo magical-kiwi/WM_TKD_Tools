@@ -125,16 +125,12 @@ label {
     background-color: #545b62;
 }
 
-.quiz-controls {
+.nav-bar {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    justify-content: center;
-}
-
-.quiz-controls button {
-    flex: 1;
-    min-width: fit-content;
+    justify-content: flex-start;
+    margin-bottom: 15px;
 }
 
 .category-list {

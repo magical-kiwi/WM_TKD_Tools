@@ -6,21 +6,21 @@
     <link rel="stylesheet" href="../quiz_style.css">
     <script type="module" src="../cbd_quiz.js"></script>
     <script type="module" src="CDB.js"></script>
-    <title>Karate Terminology Quiz</title>
+    <title>Cho Dan Bo Terminology Quiz</title>
 </head>
 <body>
     <div class="quiz-container">
-        <button id="back">Back to the menu</button>
+        <div class="nav-bar">
+            <button id="back">Back to the menu</button>
+            <button id="change-category">Choose a different category</button>
+        </div>
         <h1 id = "title"></h1>
         <div id="category-select"></div>
         <div id="progress" class="progress"></div>
         <div id="feedback"></div>
         <div id="quiz"></div>
         <div id="results"></div>
-        <div class="quiz-controls">
-            <button id="reset">Restart Quiz</button>
-            <button id="change-category">Choose a different category</button>
-        </div>
+        <button id="reset">Restart Quiz</button>
     </div>
 </body>
 </html>

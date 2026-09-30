@@ -1,3 +1,5 @@
+import { calculateEncouragement, goToMenu } from './quiz_common.js';
+
 // Shows one question at a time with immediate feedback, for quizzes too long
 // to comfortably review as a single scrolling page (e.g. the 126-question
 // black belt quiz).
@@ -9,7 +11,7 @@ export class SequentialQuiz {
         this.quizElements = this.#getQuizElements(document);
         if (options.manageBackButton !== false) {
             this.quizElements.backButton.addEventListener('click', () => {
-                this.goBack()
+                goToMenu()
             });
         }
         this.quizElements.resetButton.addEventListener('click', () => {
@@ -30,10 +32,6 @@ export class SequentialQuiz {
             backButton: doc.getElementById("back"),
             results: doc.getElementById("results"),
         };
-    }
-
-    goBack(){
-        window.location.href = "../../index.html"
     }
 
     resetQuiz() {
@@ -130,7 +128,7 @@ export class SequentialQuiz {
         quizElements.progress.innerHTML = '';
         quizElements.quiz.style.display = 'none';
 
-        let encouragement = this.#calculateEncouragment(this.score);
+        let encouragement = calculateEncouragement(this.score, this.quizData.length);
         let resultsHtml = `<p><strong>Final Score:</strong><br>You scored ${this.score} out of ${this.quizData.length}. ${encouragement}</p>`;
 
         if (this.review.length > 0) {
@@ -145,18 +143,6 @@ export class SequentialQuiz {
         if (this.onComplete) {
             this.onComplete(this.score, this.quizData.length);
         }
-    }
-
-    #calculateEncouragment(score){
-        let encouragement = ''
-        let percentCorrect = score/this.quizData.length;
-        if(percentCorrect >= 1) encouragement = 'Yay, you got full marks. Well done!';
-        else if(percentCorrect >= 0.90) encouragement = 'So close, just a few more tries!';
-        else if(percentCorrect >= 0.75) encouragement = 'Almost there, keep at it!';
-        else if(percentCorrect >= 0.50) encouragement = 'Half way there, keep practising!';
-        else encouragement = 'Keep practising, you get there in no time!';
-
-        return encouragement
     }
 }
 
@@ -178,7 +164,7 @@ export class CategoryQuizMenu {
         this.elements = this.#getElements(document);
         this.elements.title.innerHTML = title;
         this.elements.backButton.addEventListener('click', () => {
-            window.location.href = "../../index.html";
+            goToMenu()
         });
         this.elements.changeCategoryButton.addEventListener('click', () => {
             this.#showMenu()
