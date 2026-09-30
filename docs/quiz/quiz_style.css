@@ -92,6 +92,10 @@ label {
     color: #555;
 }
 
+.feedback-placeholder {
+    visibility: hidden;
+}
+
 .options {
     display: flex;
     flex-direction: column;

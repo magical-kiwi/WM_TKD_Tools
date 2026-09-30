@@ -1,8 +1,6 @@
 import { calculateEncouragement, goToMenu } from './quiz_common.js';
 
-// Shows one question at a time with immediate feedback, for quizzes too long
-// to comfortably review as a single scrolling page (e.g. the 126-question
-// black belt quiz).
+// Shows one question at a time with immediate feedback
 export class SequentialQuiz {
     constructor(document, title, questions = [], options = {}) {
         this.quizData = questions;
@@ -40,7 +38,10 @@ export class SequentialQuiz {
         this.review = [];
 
         let quizElements = this.quizElements;
-        quizElements.feedback.innerHTML = '';
+        // Placeholder occupies the same space real feedback will once a
+        // question is answered, so the buttons below don't shift down the
+        // first time feedback text appears.
+        this.#setFeedback({ mainHtml: '&nbsp;', scoreText: '&nbsp;', placeholder: true });
         quizElements.results.innerHTML = '';
         quizElements.quiz.style.display = '';
 
@@ -95,7 +96,8 @@ export class SequentialQuiz {
     #answerQuestion(selectedOption) {
         const currentQuestion = this.quizData[this.currentIndex];
         const correctText = currentQuestion[currentQuestion.correct];
-        let feedbackHtml;
+        let mainClass;
+        let mainHtml;
 
         if (selectedOption === null) {
             this.review.push({
@@ -103,24 +105,41 @@ export class SequentialQuiz {
                 status: "You didn't know this one",
                 correctText
             });
-            feedbackHtml = `<p class="incorrect"><strong>The meaning of "${currentQuestion.question}" is "${correctText}".</strong></p>`;
+            mainClass = 'incorrect';
+            mainHtml = `<strong>The meaning of "${currentQuestion.question}" is "${correctText}".</strong>`;
         } else if (selectedOption === currentQuestion.correct) {
             this.score++;
-            feedbackHtml = `<p class="correct"><strong>Correct.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".</p>`;
+            mainClass = 'correct';
+            mainHtml = `<strong>Correct.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".`;
         } else {
             this.review.push({
                 question: currentQuestion.question,
                 status: `You answered "${currentQuestion[selectedOption]}"`,
                 correctText
             });
-            feedbackHtml = `<p class="incorrect"><strong>Incorrect.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".</p>`;
+            mainClass = 'incorrect';
+            mainHtml = `<strong>Incorrect.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".`;
         }
 
-        feedbackHtml += `<p class="score-tracker">Your score is ${this.score}/${this.currentIndex + 1}</p>`;
-        this.quizElements.feedback.innerHTML = feedbackHtml;
+        this.#setFeedback({
+            mainClass,
+            mainHtml,
+            scoreText: `Your score is ${this.score}/${this.currentIndex + 1}`
+        });
 
         this.currentIndex++;
         this.#renderQuestion();
+    }
+
+    // Builds the two-line feedback block (a main message plus a running
+    // score line). Used both for real answer feedback and for the
+    // invisible placeholder in resetQuiz(), so the two can never drift out
+    // of structural sync with each other.
+    #setFeedback({ mainClass = '', mainHtml, scoreText, placeholder = false }) {
+        const extraClass = placeholder ? ' feedback-placeholder' : '';
+        this.quizElements.feedback.innerHTML =
+            `<p class="${mainClass}${extraClass}">${mainHtml}</p>` +
+            `<p class="score-tracker${extraClass}">${scoreText}</p>`;
     }
 
     #showResults() {
