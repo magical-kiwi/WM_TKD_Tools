@@ -1,4 +1,4 @@
-import { goToMenu } from '../quiz_common.js';
+import { goToMenu, contentSignature } from '../quiz_common.js';
 import { getHighScore, getProgress, resetAllData } from './CDB_common.js';
 
 // Renders a menu of themed sub-sections (plus a "Full Quiz" option) for a
@@ -36,9 +36,11 @@ export function renderCategoryMenu(document, title, quizData, categories, storag
     [...Object.keys(categories), 'full'].forEach((slug) => {
         const isFull = slug === 'full';
         const label = isFull ? 'Full Quiz' : categories[slug];
-        const count = questionsForCategory(slug).length;
-        const highScore = getHighScore(storageKey, slug, count);
-        const progress = getProgress(storageKey, slug, count);
+        const questions = questionsForCategory(slug);
+        const count = questions.length;
+        const signature = contentSignature(questions);
+        const highScore = getHighScore(storageKey, slug, signature);
+        const progress = getProgress(storageKey, slug, signature);
 
         const button = document.createElement("button");
         button.type = "button";

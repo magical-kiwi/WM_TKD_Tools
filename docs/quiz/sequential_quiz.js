@@ -1,4 +1,4 @@
-import { calculateEncouragement, goToMenu } from './quiz_common.js';
+import { calculateEncouragement, goToMenu, contentSignature } from './quiz_common.js';
 
 // Shows one question at a time with immediate feedback. Owns a whole page:
 // the back button always leaves for the site menu, and an optional
@@ -7,6 +7,7 @@ import { calculateEncouragement, goToMenu } from './quiz_common.js';
 export class SequentialQuiz {
     constructor(document, title, questions = [], options = {}) {
         this.quizData = questions;
+        this.contentSignature = contentSignature(questions);
         this.title = title;
         this.onComplete = options.onComplete || null;
         this.onProgress = options.onProgress || null;
@@ -162,7 +163,8 @@ export class SequentialQuiz {
                 currentIndex: this.currentIndex,
                 score: this.score,
                 review: this.review,
-                total: this.quizData.length
+                total: this.quizData.length,
+                signature: this.contentSignature
             });
         }
 
@@ -198,7 +200,7 @@ export class SequentialQuiz {
         quizElements.results.innerHTML = resultsHtml;
 
         if (this.onComplete) {
-            this.onComplete(this.score, this.quizData.length);
+            this.onComplete(this.score, this.quizData.length, this.contentSignature);
         }
     }
 }

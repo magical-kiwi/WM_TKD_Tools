@@ -16,10 +16,11 @@ function highScoreKey(storageKey, slug) {
     return `${storageKey}_v${HIGH_SCORE_SCHEMA_VERSION}_highscore_${slug}`;
 }
 
-// currentTotal, when given, discards a saved score whose total no longer
-// matches the category's current question count - e.g. after questions were
-// added/removed, so an old "15/15" can't linger and look like a live result.
-export function getHighScore(storageKey, slug, currentTotal) {
+// currentSignature, when given, discards a saved score computed from a
+// different question set - e.g. after questions were added, removed,
+// reordered or reworded, so an old "15/15" can't linger and look like a
+// live result for content that no longer matches it.
+export function getHighScore(storageKey, slug, currentSignature) {
     try {
         const raw = localStorage.getItem(highScoreKey(storageKey, slug));
         if (!raw) return null;
@@ -27,7 +28,7 @@ export function getHighScore(storageKey, slug, currentTotal) {
         if (typeof parsed.score !== 'number' || typeof parsed.total !== 'number') {
             return null;
         }
-        if (typeof currentTotal === 'number' && parsed.total !== currentTotal) {
+        if (typeof currentSignature === 'number' && parsed.signature !== currentSignature) {
             return null;
         }
         return parsed;
@@ -36,11 +37,11 @@ export function getHighScore(storageKey, slug, currentTotal) {
     }
 }
 
-export function saveHighScore(storageKey, slug, score, total) {
-    const existing = getHighScore(storageKey, slug, total);
+export function saveHighScore(storageKey, slug, score, total, signature) {
+    const existing = getHighScore(storageKey, slug, signature);
     if (!existing || score > existing.score) {
         try {
-            localStorage.setItem(highScoreKey(storageKey, slug), JSON.stringify({ score, total }));
+            localStorage.setItem(highScoreKey(storageKey, slug), JSON.stringify({ score, total, signature }));
         } catch {
             // Best-effort: storage may be full or unavailable, but the quiz
             // itself keeps working in-memory either way.
@@ -52,11 +53,11 @@ function progressKey(storageKey, slug) {
     return `${storageKey}_v${PROGRESS_SCHEMA_VERSION}_progress_${slug}`;
 }
 
-// currentTotal, when given, discards a checkpoint whose total no longer
-// matches the category's current question count - e.g. after questions were
-// added, removed or reordered, so a stale checkpoint can't resume into the
-// wrong question or a mismatched review list.
-export function getProgress(storageKey, slug, currentTotal) {
+// currentSignature, when given, discards a checkpoint computed from a
+// different question set - e.g. after questions were added, removed,
+// reordered or reworded, so a stale checkpoint can't resume into the wrong
+// question or a mismatched review list.
+export function getProgress(storageKey, slug, currentSignature) {
     try {
         const raw = localStorage.getItem(progressKey(storageKey, slug));
         if (!raw) return null;
@@ -69,7 +70,7 @@ export function getProgress(storageKey, slug, currentTotal) {
         ) {
             return null;
         }
-        if (typeof currentTotal === 'number' && parsed.total !== currentTotal) {
+        if (typeof currentSignature === 'number' && parsed.signature !== currentSignature) {
             return null;
         }
         return parsed;
@@ -97,13 +98,18 @@ export function saveProgress(storageKey, slug, state) {
 // sweeps up any orphaned entries left behind by an older storage format.
 export function resetAllData(storageKey) {
     const prefix = `${storageKey}_`;
-    Object.keys(localStorage)
-        .filter((key) => key.startsWith(prefix))
-        .forEach((key) => {
-            try {
-                localStorage.removeItem(key);
-            } catch {
-                // Best-effort: keep clearing the remaining keys either way.
-            }
-        });
+    let keys;
+    try {
+        keys = Object.keys(localStorage).filter((key) => key.startsWith(prefix));
+    } catch {
+        // Best-effort: storage isn't accessible at all, nothing to clear.
+        return;
+    }
+    keys.forEach((key) => {
+        try {
+            localStorage.removeItem(key);
+        } catch {
+            // Best-effort: keep clearing the remaining keys either way.
+        }
+    });
 }
