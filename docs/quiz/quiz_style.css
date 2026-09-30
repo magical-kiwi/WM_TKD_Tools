@@ -52,6 +52,10 @@ button:disabled {
     color: red;
 }
 
+.dont-know-feedback {
+    color: #555;
+}
+
 a {
     display: block;
     margin: 20px;

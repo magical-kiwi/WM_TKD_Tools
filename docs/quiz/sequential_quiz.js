@@ -131,7 +131,7 @@ export class SequentialQuiz {
                 status: "You didn't know this one",
                 correctText
             });
-            mainClass = 'incorrect';
+            mainClass = 'dont-know-feedback';
             mainHtml = `<strong>The meaning of "${currentQuestion.question}" is "${correctText}".</strong>`;
         } else if (selectedOption === currentQuestion.correct) {
             this.score++;
