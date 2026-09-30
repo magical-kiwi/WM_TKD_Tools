@@ -1,5 +1,5 @@
-import { goToMenu } from './quiz_common.js';
-import { getHighScore, getProgress } from './cbd_common.js';
+import { goToMenu } from '../quiz_common.js';
+import { getHighScore, getProgress } from './CDB_common.js';
 
 // Renders a menu of themed sub-sections (plus a "Full Quiz" option) for a
 // large quiz. Each option is a real link to quizPageUrl with a ?category=

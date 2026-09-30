@@ -1,5 +1,5 @@
-import { SequentialQuiz } from '../cbd_quiz.js';
-import { getProgress, saveProgress, saveHighScore } from '../cbd_common.js';
+import { SequentialQuiz } from '../sequential_quiz.js';
+import { getProgress, saveProgress, saveHighScore } from './CDB_common.js';
 import { quizData, categories } from './CDB_data.js';
 
 const STORAGE_KEY = 'cdbQuiz';

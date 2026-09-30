@@ -1,7 +1,7 @@
 // Persistence shared by the CDB quiz's menu page (which reads this to show
 // "High score"/"Resume" on each category button) and its quiz page (which
-// writes it as the user answers). Kept separate from both cbd_menu.js and
-// cbd_quiz.js since it belongs to neither one specifically.
+// writes it as the user answers). Kept separate from both CDB_menu.js and
+// sequential_quiz.js since it belongs to neither one specifically.
 
 // Bump this when the shape of the stored high score value changes. Old,
 // differently-versioned entries are simply left orphaned in localStorage
