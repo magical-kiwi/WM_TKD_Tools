@@ -63,3 +63,13 @@ export function saveProgress(storageKey, slug, state) {
         localStorage.setItem(progressKey(storageKey, slug), JSON.stringify(state));
     }
 }
+
+// Wipes every high score and in-progress checkpoint for this quiz. Matches
+// on a plain prefix rather than the current schema versions, so it also
+// sweeps up any orphaned entries left behind by an older storage format.
+export function resetAllData(storageKey) {
+    const prefix = `${storageKey}_`;
+    Object.keys(localStorage)
+        .filter((key) => key.startsWith(prefix))
+        .forEach((key) => localStorage.removeItem(key));
+}
