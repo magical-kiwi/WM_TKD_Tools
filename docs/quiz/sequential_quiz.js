@@ -1,9 +1,8 @@
-import { calculateEncouragement, goToMenu, contentSignature } from './quiz_common.js';
+import { calculateEncouragement, contentSignature } from './quiz_common.js';
 
 // Shows one question at a time with immediate feedback. Owns a whole page:
-// the back button always leaves for the site menu, and an optional
-// "change category" button (shown when options.menuUrl is given) leaves for
-// that quiz's own category-picker page.
+// an optional "change category" button (shown when options.menuUrl is
+// given) leaves for that quiz's own category-picker page.
 export class SequentialQuiz {
     constructor(document, title, questions = [], options = {}) {
         this.quizData = questions;
@@ -12,10 +11,6 @@ export class SequentialQuiz {
         this.onComplete = options.onComplete || null;
         this.onProgress = options.onProgress || null;
         this.quizElements = this.#getQuizElements(document);
-
-        this.quizElements.backButton.addEventListener('click', () => {
-            goToMenu()
-        });
 
         if (options.menuUrl) {
             this.quizElements.changeCategoryButton.addEventListener('click', () => {
@@ -46,7 +41,6 @@ export class SequentialQuiz {
             feedback: doc.getElementById("feedback"),
             quiz: doc.getElementById("quiz"),
             resetButton: doc.getElementById("reset"),
-            backButton: doc.getElementById("back"),
             changeCategoryButton: doc.getElementById("change-category"),
             results: doc.getElementById("results"),
         };
