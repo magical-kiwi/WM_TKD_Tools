@@ -31,7 +31,7 @@ export class SequentialQuiz {
 
         const resumeFrom = options.resumeFrom;
         if (resumeFrom && resumeFrom.currentIndex > 0 && resumeFrom.currentIndex < this.quizData.length) {
-            this.#startFrom(resumeFrom.currentIndex, resumeFrom.score);
+            this.#startFrom(resumeFrom.currentIndex, resumeFrom.score, resumeFrom.review || []);
         } else {
             this.resetQuiz();
         }
@@ -52,16 +52,16 @@ export class SequentialQuiz {
     }
 
     resetQuiz() {
-        this.#startFrom(0, 0);
+        this.#startFrom(0, 0, []);
         if (this.onProgress) {
             this.onProgress(null);
         }
     }
 
-    #startFrom(currentIndex, score) {
+    #startFrom(currentIndex, score, review) {
         this.currentIndex = currentIndex;
         this.score = score;
-        this.review = [];
+        this.review = review;
 
         let quizElements = this.quizElements;
         // Placeholder occupies the same space real feedback will once a
@@ -158,7 +158,12 @@ export class SequentialQuiz {
         // Only checkpoint while there's still a question to resume into;
         // finishing the quiz is handled separately by onComplete.
         if (this.onProgress && this.currentIndex < this.quizData.length) {
-            this.onProgress({ currentIndex: this.currentIndex, score: this.score });
+            this.onProgress({
+                currentIndex: this.currentIndex,
+                score: this.score,
+                review: this.review,
+                total: this.quizData.length
+            });
         }
 
         this.#renderQuestion();

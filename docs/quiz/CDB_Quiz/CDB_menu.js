@@ -37,8 +37,8 @@ export function renderCategoryMenu(document, title, quizData, categories, storag
         const isFull = slug === 'full';
         const label = isFull ? 'Full Quiz' : categories[slug];
         const count = questionsForCategory(slug).length;
-        const highScore = getHighScore(storageKey, slug);
-        const progress = getProgress(storageKey, slug);
+        const highScore = getHighScore(storageKey, slug, count);
+        const progress = getProgress(storageKey, slug, count);
 
         const button = document.createElement("button");
         button.type = "button";

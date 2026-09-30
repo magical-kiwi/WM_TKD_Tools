@@ -8,7 +8,7 @@ const BASE_TITLE = 'Cho Dan Bo Terminology Quiz';
 
 const slug = new URLSearchParams(window.location.search).get('category') || 'full';
 
-if (slug !== 'full' && !categories[slug]) {
+if (slug !== 'full' && !Object.hasOwn(categories, slug)) {
     // Unknown/stale category (bad link, old bookmark) - send them back to pick one.
     window.location.href = MENU_URL;
 } else {
@@ -18,7 +18,7 @@ if (slug !== 'full' && !categories[slug]) {
 
     new SequentialQuiz(document, title, questions, {
         menuUrl: MENU_URL,
-        resumeFrom: getProgress(STORAGE_KEY, slug),
+        resumeFrom: getProgress(STORAGE_KEY, slug, questions.length),
         onProgress: (state) => saveProgress(STORAGE_KEY, slug, state),
         onComplete: (score, total) => {
             saveHighScore(STORAGE_KEY, slug, score, total);
