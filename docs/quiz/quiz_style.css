@@ -44,6 +44,12 @@ button:disabled {
     margin-bottom: 20px;
 }
 
+.question-prompt {
+    font-weight: normal;
+    color: #555;
+    margin-bottom: 4px;
+}
+
 .correct {
     color: green;
 }
@@ -82,10 +88,16 @@ label {
     margin-right: 10px; /* Add spacing between button and text */
 }
 
+.progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
 .progress {
     font-weight: bold;
     color: #555;
-    margin-bottom: 10px;
 }
 
 #feedback p {

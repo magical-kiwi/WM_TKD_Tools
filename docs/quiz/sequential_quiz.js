@@ -38,6 +38,7 @@ export class SequentialQuiz {
             document: doc,
             title: doc.getElementById("title"),
             progress: doc.getElementById("progress"),
+            score: doc.getElementById("score"),
             feedback: doc.getElementById("feedback"),
             quiz: doc.getElementById("quiz"),
             resetButton: doc.getElementById("reset"),
@@ -62,7 +63,7 @@ export class SequentialQuiz {
         // Placeholder occupies the same space real feedback will once a
         // question is answered, so the buttons below don't shift down the
         // first time feedback text appears.
-        this.#setFeedback({ mainHtml: '&nbsp;', scoreText: '&nbsp;', placeholder: true });
+        this.#setFeedback({ mainHtml: '&nbsp;', placeholder: true });
         quizElements.results.innerHTML = '';
         quizElements.quiz.style.display = '';
 
@@ -81,11 +82,17 @@ export class SequentialQuiz {
         const questionNumber = this.currentIndex + 1;
 
         quizElements.progress.innerHTML = `Question ${questionNumber} of ${this.quizData.length}`;
+        quizElements.score.innerHTML = `Your score is ${this.score}/${this.currentIndex}`;
 
         quizElements.quiz.innerHTML = '';
 
         const questionContainer = document.createElement("div");
         questionContainer.className = "question";
+
+        const questionPrompt = document.createElement("p");
+        questionPrompt.className = "question-prompt";
+        questionPrompt.innerHTML = "Choose the correct meaning of:";
+        questionContainer.appendChild(questionPrompt);
 
         const questionHeading = document.createElement("h2");
         questionHeading.innerHTML = currentQuestion.question;
@@ -142,11 +149,7 @@ export class SequentialQuiz {
             mainHtml = `<strong>Incorrect.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".`;
         }
 
-        this.#setFeedback({
-            mainClass,
-            mainHtml,
-            scoreText: `Your score is ${this.score}/${this.currentIndex + 1}`
-        });
+        this.#setFeedback({ mainClass, mainHtml });
 
         this.currentIndex++;
 
@@ -165,20 +168,18 @@ export class SequentialQuiz {
         this.#renderQuestion();
     }
 
-    // Builds the two-line feedback block (a main message plus a running
-    // score line). Used both for real answer feedback and for the
-    // invisible placeholder in resetQuiz(), so the two can never drift out
-    // of structural sync with each other.
-    #setFeedback({ mainClass = '', mainHtml, scoreText, placeholder = false }) {
+    // Builds the feedback message. Used both for real answer feedback and
+    // for the invisible placeholder in resetQuiz(), so the two can never
+    // drift out of structural sync with each other.
+    #setFeedback({ mainClass = '', mainHtml, placeholder = false }) {
         const extraClass = placeholder ? ' feedback-placeholder' : '';
-        this.quizElements.feedback.innerHTML =
-            `<p class="${mainClass}${extraClass}">${mainHtml}</p>` +
-            `<p class="score-tracker${extraClass}">${scoreText}</p>`;
+        this.quizElements.feedback.innerHTML = `<p class="${mainClass}${extraClass}">${mainHtml}</p>`;
     }
 
     #showResults() {
         let quizElements = this.quizElements;
         quizElements.progress.innerHTML = '';
+        quizElements.score.innerHTML = '';
         quizElements.quiz.style.display = 'none';
 
         let encouragement = calculateEncouragement(this.score, this.quizData.length);
