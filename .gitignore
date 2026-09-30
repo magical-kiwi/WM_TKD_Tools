@@ -1,3 +1,5 @@
 # Local Claude Code settings
 /.claude/
 
+# JetBrains IDE project settings
+.idea/
