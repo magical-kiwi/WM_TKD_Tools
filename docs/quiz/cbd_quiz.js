@@ -1,6 +1,9 @@
 import { calculateEncouragement, goToMenu } from './quiz_common.js';
 
-// Shows one question at a time with immediate feedback
+// Shows one question at a time with immediate feedback. Owns a whole page:
+// the back button always leaves for the site menu, and an optional
+// "change category" button (shown when options.menuUrl is given) leaves for
+// that quiz's own category-picker page.
 export class SequentialQuiz {
     constructor(document, title, questions = [], options = {}) {
         this.quizData = questions;
@@ -8,11 +11,19 @@ export class SequentialQuiz {
         this.onComplete = options.onComplete || null;
         this.onProgress = options.onProgress || null;
         this.quizElements = this.#getQuizElements(document);
-        if (options.manageBackButton !== false) {
-            this.quizElements.backButton.addEventListener('click', () => {
-                goToMenu()
+
+        this.quizElements.backButton.addEventListener('click', () => {
+            goToMenu()
+        });
+
+        if (options.menuUrl) {
+            this.quizElements.changeCategoryButton.addEventListener('click', () => {
+                window.location.href = options.menuUrl;
             });
+        } else {
+            this.quizElements.changeCategoryButton.style.display = 'none';
         }
+
         this.quizElements.resetButton.addEventListener('click', () => {
             this.resetQuiz()
         });
@@ -35,6 +46,7 @@ export class SequentialQuiz {
             quiz: doc.getElementById("quiz"),
             resetButton: doc.getElementById("reset"),
             backButton: doc.getElementById("back"),
+            changeCategoryButton: doc.getElementById("change-category"),
             results: doc.getElementById("results"),
         };
     }
@@ -183,181 +195,5 @@ export class SequentialQuiz {
         if (this.onComplete) {
             this.onComplete(this.score, this.quizData.length);
         }
-    }
-}
-
-// Bump this when the shape of the stored high score value changes. Old,
-// differently-versioned entries are simply left orphaned in localStorage
-// rather than being misread as the new shape.
-const HIGH_SCORE_SCHEMA_VERSION = 1;
-
-// Same idea as HIGH_SCORE_SCHEMA_VERSION, but for the separate in-progress
-// checkpoint data, since the two can change shape independently.
-const PROGRESS_SCHEMA_VERSION = 1;
-
-// Presents a menu of themed sub-sections (plus a "Full Quiz" option) for a
-// large quiz, and runs a SequentialQuiz for whichever the user picks. High
-// scores per section are kept in localStorage so they persist between visits.
-export class CategoryQuizMenu {
-    constructor(document, title, quizData, categories, storageKey) {
-        this.document = document;
-        this.title = title;
-        this.quizData = quizData;
-        this.categories = categories;
-        this.storageKey = storageKey;
-        this.elements = this.#getElements(document);
-        this.elements.title.innerHTML = title;
-        this.elements.backButton.addEventListener('click', () => {
-            goToMenu()
-        });
-        this.elements.changeCategoryButton.addEventListener('click', () => {
-            this.#showMenu()
-        });
-        this.#showMenu();
-    }
-
-    #getElements(doc) {
-        return {
-            title: doc.getElementById("title"),
-            categorySelect: doc.getElementById("category-select"),
-            progress: doc.getElementById("progress"),
-            feedback: doc.getElementById("feedback"),
-            quiz: doc.getElementById("quiz"),
-            results: doc.getElementById("results"),
-            resetButton: doc.getElementById("reset"),
-            changeCategoryButton: doc.getElementById("change-category"),
-            backButton: doc.getElementById("back"),
-        };
-    }
-
-    #highScoreKey(slug) {
-        return `${this.storageKey}_v${HIGH_SCORE_SCHEMA_VERSION}_highscore_${slug}`;
-    }
-
-    #getHighScore(slug) {
-        try {
-            const raw = localStorage.getItem(this.#highScoreKey(slug));
-            if (!raw) return null;
-            const parsed = JSON.parse(raw);
-            if (typeof parsed.score !== 'number' || typeof parsed.total !== 'number') {
-                return null;
-            }
-            return parsed;
-        } catch {
-            return null;
-        }
-    }
-
-    #saveHighScore(slug, score, total) {
-        const existing = this.#getHighScore(slug);
-        if (!existing || score > existing.score) {
-            localStorage.setItem(this.#highScoreKey(slug), JSON.stringify({ score, total }));
-        }
-    }
-
-    #progressKey(slug) {
-        return `${this.storageKey}_v${PROGRESS_SCHEMA_VERSION}_progress_${slug}`;
-    }
-
-    #getProgress(slug) {
-        try {
-            const raw = localStorage.getItem(this.#progressKey(slug));
-            if (!raw) return null;
-            const parsed = JSON.parse(raw);
-            if (typeof parsed.currentIndex !== 'number' || typeof parsed.score !== 'number') {
-                return null;
-            }
-            return parsed;
-        } catch {
-            return null;
-        }
-    }
-
-    // Pass null to clear the checkpoint (quiz finished or restarted).
-    #saveProgress(slug, state) {
-        if (state === null) {
-            localStorage.removeItem(this.#progressKey(slug));
-        } else {
-            localStorage.setItem(this.#progressKey(slug), JSON.stringify(state));
-        }
-    }
-
-    #questionsForCategory(slug) {
-        return slug === 'full' ? this.quizData : this.quizData.filter((q) => q.category === slug);
-    }
-
-    #showMenu() {
-        const elements = this.elements;
-
-        elements.progress.innerHTML = '';
-        elements.feedback.innerHTML = '';
-        elements.quiz.innerHTML = '';
-        elements.quiz.style.display = 'none';
-        elements.results.innerHTML = '';
-        elements.resetButton.style.display = 'none';
-        elements.changeCategoryButton.style.display = 'none';
-
-        elements.categorySelect.style.display = '';
-        elements.categorySelect.innerHTML = '';
-
-        const intro = document.createElement("p");
-        intro.innerHTML = "Choose a section to practise, or take the whole quiz in one go.";
-        elements.categorySelect.appendChild(intro);
-
-        const list = document.createElement("div");
-        list.className = "category-list";
-
-        [...Object.keys(this.categories), 'full'].forEach((slug) => {
-            const isFull = slug === 'full';
-            const label = isFull ? 'Full Quiz' : this.categories[slug];
-            const count = this.#questionsForCategory(slug).length;
-            const highScore = this.#getHighScore(slug);
-            const progress = this.#getProgress(slug);
-
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = isFull ? "category-option full-quiz-option" : "category-option";
-
-            let metaText = `${count} question${count === 1 ? '' : 's'}`;
-            if (progress) {
-                metaText += ` · Resume at question ${progress.currentIndex + 1}`;
-            }
-            if (highScore) {
-                metaText += ` · High score: ${highScore.score}/${highScore.total}`;
-            }
-
-            button.innerHTML = `<span class="category-name">${label}</span><span class="category-meta">${metaText}</span>`;
-            button.addEventListener('click', () => this.#startQuiz(slug, label));
-            list.appendChild(button);
-        });
-
-        elements.categorySelect.appendChild(list);
-    }
-
-    #startQuiz(slug, label) {
-        const elements = this.elements;
-
-        elements.categorySelect.style.display = 'none';
-        elements.quiz.style.display = '';
-        elements.resetButton.style.display = '';
-        elements.changeCategoryButton.style.display = '';
-
-        // Strip listeners left over from any previously started SequentialQuiz.
-        const freshReset = elements.resetButton.cloneNode(true);
-        elements.resetButton.replaceWith(freshReset);
-        elements.resetButton = freshReset;
-
-        const questions = this.#questionsForCategory(slug);
-        const quizTitle = slug === 'full' ? this.title : `${this.title}: ${label}`;
-
-        new SequentialQuiz(this.document, quizTitle, questions, {
-            manageBackButton: false,
-            resumeFrom: this.#getProgress(slug),
-            onProgress: (state) => this.#saveProgress(slug, state),
-            onComplete: (score, total) => {
-                this.#saveHighScore(slug, score, total);
-                this.#saveProgress(slug, null);
-            },
-        });
     }
 }
