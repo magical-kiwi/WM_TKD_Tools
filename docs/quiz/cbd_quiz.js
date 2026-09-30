@@ -6,6 +6,7 @@ export class SequentialQuiz {
         this.quizData = questions;
         this.title = title;
         this.onComplete = options.onComplete || null;
+        this.onProgress = options.onProgress || null;
         this.quizElements = this.#getQuizElements(document);
         if (options.manageBackButton !== false) {
             this.quizElements.backButton.addEventListener('click', () => {
@@ -16,7 +17,13 @@ export class SequentialQuiz {
             this.resetQuiz()
         });
         this.quizElements.title.innerHTML = this.title;
-        this.resetQuiz();
+
+        const resumeFrom = options.resumeFrom;
+        if (resumeFrom && resumeFrom.currentIndex > 0 && resumeFrom.currentIndex < this.quizData.length) {
+            this.#startFrom(resumeFrom.currentIndex, resumeFrom.score);
+        } else {
+            this.resetQuiz();
+        }
     }
 
     #getQuizElements(doc) {
@@ -33,8 +40,15 @@ export class SequentialQuiz {
     }
 
     resetQuiz() {
-        this.currentIndex = 0;
-        this.score = 0;
+        this.#startFrom(0, 0);
+        if (this.onProgress) {
+            this.onProgress(null);
+        }
+    }
+
+    #startFrom(currentIndex, score) {
+        this.currentIndex = currentIndex;
+        this.score = score;
         this.review = [];
 
         let quizElements = this.quizElements;
@@ -128,6 +142,13 @@ export class SequentialQuiz {
         });
 
         this.currentIndex++;
+
+        // Only checkpoint while there's still a question to resume into;
+        // finishing the quiz is handled separately by onComplete.
+        if (this.onProgress && this.currentIndex < this.quizData.length) {
+            this.onProgress({ currentIndex: this.currentIndex, score: this.score });
+        }
+
         this.#renderQuestion();
     }
 
@@ -169,6 +190,10 @@ export class SequentialQuiz {
 // differently-versioned entries are simply left orphaned in localStorage
 // rather than being misread as the new shape.
 const HIGH_SCORE_SCHEMA_VERSION = 1;
+
+// Same idea as HIGH_SCORE_SCHEMA_VERSION, but for the separate in-progress
+// checkpoint data, since the two can change shape independently.
+const PROGRESS_SCHEMA_VERSION = 1;
 
 // Presents a menu of themed sub-sections (plus a "Full Quiz" option) for a
 // large quiz, and runs a SequentialQuiz for whichever the user picks. High
@@ -230,6 +255,33 @@ export class CategoryQuizMenu {
         }
     }
 
+    #progressKey(slug) {
+        return `${this.storageKey}_v${PROGRESS_SCHEMA_VERSION}_progress_${slug}`;
+    }
+
+    #getProgress(slug) {
+        try {
+            const raw = localStorage.getItem(this.#progressKey(slug));
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (typeof parsed.currentIndex !== 'number' || typeof parsed.score !== 'number') {
+                return null;
+            }
+            return parsed;
+        } catch {
+            return null;
+        }
+    }
+
+    // Pass null to clear the checkpoint (quiz finished or restarted).
+    #saveProgress(slug, state) {
+        if (state === null) {
+            localStorage.removeItem(this.#progressKey(slug));
+        } else {
+            localStorage.setItem(this.#progressKey(slug), JSON.stringify(state));
+        }
+    }
+
     #questionsForCategory(slug) {
         return slug === 'full' ? this.quizData : this.quizData.filter((q) => q.category === slug);
     }
@@ -260,12 +312,16 @@ export class CategoryQuizMenu {
             const label = isFull ? 'Full Quiz' : this.categories[slug];
             const count = this.#questionsForCategory(slug).length;
             const highScore = this.#getHighScore(slug);
+            const progress = this.#getProgress(slug);
 
             const button = document.createElement("button");
             button.type = "button";
             button.className = isFull ? "category-option full-quiz-option" : "category-option";
 
             let metaText = `${count} question${count === 1 ? '' : 's'}`;
+            if (progress) {
+                metaText += ` · Resume at question ${progress.currentIndex + 1}`;
+            }
             if (highScore) {
                 metaText += ` · High score: ${highScore.score}/${highScore.total}`;
             }
@@ -296,7 +352,12 @@ export class CategoryQuizMenu {
 
         new SequentialQuiz(this.document, quizTitle, questions, {
             manageBackButton: false,
-            onComplete: (score, total) => this.#saveHighScore(slug, score, total),
+            resumeFrom: this.#getProgress(slug),
+            onProgress: (state) => this.#saveProgress(slug, state),
+            onComplete: (score, total) => {
+                this.#saveHighScore(slug, score, total);
+                this.#saveProgress(slug, null);
+            },
         });
     }
 }
