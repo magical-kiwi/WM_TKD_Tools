@@ -44,12 +44,22 @@ button:disabled {
     margin-bottom: 20px;
 }
 
+.question-prompt {
+    font-weight: normal;
+    color: #555;
+    margin-bottom: 4px;
+}
+
 .correct {
     color: green;
 }
 
 .incorrect {
     color: red;
+}
+
+.dont-know-feedback {
+    color: #555;
 }
 
 a {
@@ -78,10 +88,16 @@ label {
     margin-right: 10px; /* Add spacing between button and text */
 }
 
+.progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
 .progress {
     font-weight: bold;
     color: #555;
-    margin-bottom: 10px;
 }
 
 #feedback p {
@@ -90,6 +106,10 @@ label {
 
 .score-tracker {
     color: #555;
+}
+
+.feedback-placeholder {
+    visibility: hidden;
 }
 
 .options {
@@ -123,4 +143,83 @@ label {
 
 .answer-option.dont-know:hover {
     background-color: #545b62;
+}
+
+.nav-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 15px;
+}
+
+.category-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+    background-color: #334155;
+    color: #fff;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.score-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 8px;
+    display: flex;
+}
+
+.score-bar-correct {
+    background-color: #28a745;
+}
+
+.score-bar-remaining {
+    background-color: #dc3545;
+}
+
+.category-option:hover {
+    background-color: #1e293b;
+}
+
+.category-option.full-quiz-option {
+    background-color: #0f766e;
+    margin-top: 18px;
+}
+
+.category-option.full-quiz-option:hover {
+    background-color: #115e59;
+}
+
+.category-name {
+    font-size: 1.15em;
+    font-weight: bold;
+}
+
+.category-meta {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.reset-data-button {
+    display: block;
+    width: fit-content;
+    margin-top: 35px;
+    margin-left: auto;
 }

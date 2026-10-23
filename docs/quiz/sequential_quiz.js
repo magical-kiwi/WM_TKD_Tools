@@ -1,19 +1,36 @@
-// Shows one question at a time with immediate feedback, for quizzes too long
-// to comfortably review as a single scrolling page (e.g. the 126-question
-// black belt quiz).
+import { calculateEncouragement, contentSignature } from './quiz_common.js';
+
+// Shows one question at a time with immediate feedback. Owns a whole page:
+// an optional "change category" button (shown when options.menuUrl is
+// given) leaves for that quiz's own category-picker page.
 export class SequentialQuiz {
-    constructor(document, title, questions = []) {
+    constructor(document, title, questions = [], options = {}) {
         this.quizData = questions;
+        this.contentSignature = contentSignature(questions);
         this.title = title;
+        this.onComplete = options.onComplete || null;
+        this.onProgress = options.onProgress || null;
         this.quizElements = this.#getQuizElements(document);
-        this.quizElements.backButton.addEventListener('click', () => {
-            this.goBack()
-        });
+
+        if (options.menuUrl) {
+            this.quizElements.changeCategoryButton.addEventListener('click', () => {
+                window.location.href = options.menuUrl;
+            });
+        } else {
+            this.quizElements.changeCategoryButton.style.display = 'none';
+        }
+
         this.quizElements.resetButton.addEventListener('click', () => {
             this.resetQuiz()
         });
         this.quizElements.title.innerHTML = this.title;
-        this.resetQuiz();
+
+        const resumeFrom = options.resumeFrom;
+        if (resumeFrom && resumeFrom.currentIndex > 0 && resumeFrom.currentIndex < this.quizData.length) {
+            this.#startFrom(resumeFrom.currentIndex, resumeFrom.score, resumeFrom.review || []);
+        } else {
+            this.resetQuiz();
+        }
     }
 
     #getQuizElements(doc) {
@@ -21,25 +38,32 @@ export class SequentialQuiz {
             document: doc,
             title: doc.getElementById("title"),
             progress: doc.getElementById("progress"),
+            score: doc.getElementById("score"),
             feedback: doc.getElementById("feedback"),
             quiz: doc.getElementById("quiz"),
             resetButton: doc.getElementById("reset"),
-            backButton: doc.getElementById("back"),
+            changeCategoryButton: doc.getElementById("change-category"),
             results: doc.getElementById("results"),
         };
     }
 
-    goBack(){
-        window.location.href = "../../index.html"
+    resetQuiz() {
+        this.#startFrom(0, 0, []);
+        if (this.onProgress) {
+            this.onProgress(null);
+        }
     }
 
-    resetQuiz() {
-        this.currentIndex = 0;
-        this.score = 0;
-        this.review = [];
+    #startFrom(currentIndex, score, review) {
+        this.currentIndex = currentIndex;
+        this.score = score;
+        this.review = review;
 
         let quizElements = this.quizElements;
-        quizElements.feedback.innerHTML = '';
+        // Placeholder occupies the same space real feedback will once a
+        // question is answered, so the buttons below don't shift down the
+        // first time feedback text appears.
+        this.#setFeedback({ mainHtml: '&nbsp;', placeholder: true });
         quizElements.results.innerHTML = '';
         quizElements.quiz.style.display = '';
 
@@ -58,11 +82,17 @@ export class SequentialQuiz {
         const questionNumber = this.currentIndex + 1;
 
         quizElements.progress.innerHTML = `Question ${questionNumber} of ${this.quizData.length}`;
+        quizElements.score.innerHTML = `Your score is ${this.score}/${this.currentIndex}`;
 
         quizElements.quiz.innerHTML = '';
 
         const questionContainer = document.createElement("div");
         questionContainer.className = "question";
+
+        const questionPrompt = document.createElement("p");
+        questionPrompt.className = "question-prompt";
+        questionPrompt.innerHTML = "Choose the correct meaning of:";
+        questionContainer.appendChild(questionPrompt);
 
         const questionHeading = document.createElement("h2");
         questionHeading.innerHTML = currentQuestion.question;
@@ -94,7 +124,8 @@ export class SequentialQuiz {
     #answerQuestion(selectedOption) {
         const currentQuestion = this.quizData[this.currentIndex];
         const correctText = currentQuestion[currentQuestion.correct];
-        let feedbackHtml;
+        let mainClass;
+        let mainHtml;
 
         if (selectedOption === null) {
             this.review.push({
@@ -102,32 +133,56 @@ export class SequentialQuiz {
                 status: "You didn't know this one",
                 correctText
             });
-            feedbackHtml = `<p class="incorrect"><strong>The meaning of "${currentQuestion.question}" is "${correctText}".</strong></p>`;
+            mainClass = 'dont-know-feedback';
+            mainHtml = `<strong>The meaning of "${currentQuestion.question}" is "${correctText}".</strong>`;
         } else if (selectedOption === currentQuestion.correct) {
             this.score++;
-            feedbackHtml = `<p class="correct"><strong>Correct.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".</p>`;
+            mainClass = 'correct';
+            mainHtml = `<strong>Correct.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".`;
         } else {
             this.review.push({
                 question: currentQuestion.question,
                 status: `You answered "${currentQuestion[selectedOption]}"`,
                 correctText
             });
-            feedbackHtml = `<p class="incorrect"><strong>Incorrect.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".</p>`;
+            mainClass = 'incorrect';
+            mainHtml = `<strong>Incorrect.</strong> The meaning of "${currentQuestion.question}" is "${correctText}".`;
         }
 
-        feedbackHtml += `<p class="score-tracker">Your score is ${this.score}/${this.currentIndex + 1}</p>`;
-        this.quizElements.feedback.innerHTML = feedbackHtml;
+        this.#setFeedback({ mainClass, mainHtml });
 
         this.currentIndex++;
+
+        // Only checkpoint while there's still a question to resume into;
+        // finishing the quiz is handled separately by onComplete.
+        if (this.onProgress && this.currentIndex < this.quizData.length) {
+            this.onProgress({
+                currentIndex: this.currentIndex,
+                score: this.score,
+                review: this.review,
+                total: this.quizData.length,
+                signature: this.contentSignature
+            });
+        }
+
         this.#renderQuestion();
+    }
+
+    // Builds the feedback message. Used both for real answer feedback and
+    // for the invisible placeholder in resetQuiz(), so the two can never
+    // drift out of structural sync with each other.
+    #setFeedback({ mainClass = '', mainHtml, placeholder = false }) {
+        const extraClass = placeholder ? ' feedback-placeholder' : '';
+        this.quizElements.feedback.innerHTML = `<p class="${mainClass}${extraClass}">${mainHtml}</p>`;
     }
 
     #showResults() {
         let quizElements = this.quizElements;
         quizElements.progress.innerHTML = '';
+        quizElements.score.innerHTML = '';
         quizElements.quiz.style.display = 'none';
 
-        let encouragement = this.#calculateEncouragment(this.score);
+        let encouragement = calculateEncouragement(this.score, this.quizData.length);
         let resultsHtml = `<p><strong>Final Score:</strong><br>You scored ${this.score} out of ${this.quizData.length}. ${encouragement}</p>`;
 
         if (this.review.length > 0) {
@@ -138,17 +193,9 @@ export class SequentialQuiz {
         }
 
         quizElements.results.innerHTML = resultsHtml;
-    }
 
-    #calculateEncouragment(score){
-        let encouragement = ''
-        let percentCorrect = score/this.quizData.length;
-        if(percentCorrect >= 1) encouragement = 'Yay, you got full marks. Well done!';
-        else if(percentCorrect >= 0.90) encouragement = 'So close, just a few more tries!';
-        else if(percentCorrect >= 0.75) encouragement = 'Almost there, keep at it!';
-        else if(percentCorrect >= 0.50) encouragement = 'Half way there, keep practising!';
-        else encouragement = 'Keep practising, you get there in no time!';
-
-        return encouragement
+        if (this.onComplete) {
+            this.onComplete(this.score, this.quizData.length, this.contentSignature);
+        }
     }
 }

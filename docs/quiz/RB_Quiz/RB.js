@@ -1,4 +1,4 @@
-import { Quiz } from '../quiz_common.js';
+import { GupQuiz } from '../gup_quiz.js';
 
 const quizData = [
     { question: "Kap Kwon",                   a:"Hand techniques",                          b:"Middle part",                                     c:"Back fist",                     correct:"c"}, // 1
@@ -28,4 +28,4 @@ const quizData = [
     { question: "Ssang Soo Sang Dan Mahk Ki", a:"Without the count",                        b:"High 2 hand X block",                             c:"Concentration",                 correct:"b"}  // 25
 ];
 
-let quiz = new Quiz(document,'Red Belt Terminology Quiz', quizData);
+let quiz = new GupQuiz(document,'Red Belt Terminology Quiz', quizData);
